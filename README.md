@@ -43,30 +43,50 @@ make sure to write the changes (write = save)
 
           Photo attached
 
+
 #IMPORTANT package installation
-14) pacstrap /mnt base linux linux-firmware sof-firmware base-devel grub efibootmgr vim nano networkmanager
+14) pacstrap /mnt base linux linux-firmware sof-firmware base-devel grub efibootmgr vim nano networkmanager.
+
 15)genfstab /mnt (give info about file system )
+
 16) genfstab /mnt > /mnt/etc/fstab () transfer the command's contents to fstab file.
+
 17) arch-chroot /mnt (chroot means changeRoot into mnt)
+
 18) ln -sf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime (set date and time)
+
 19) hwclock --systohc (syncronize system clock)
 
 #localization
 20) vim /etc/locale.gen
+
 21) find es_US.UTF-8 and uncomment this.
+
 22) locale-gen
+
 23)open /etc/locate.conf with vim 
+
 24)add "LANG=en_US.UTF-8" and save it.
+
 25)open "/etc/hostname" and type the hostname there
+
 26)passwd (to setup passwod)
-27) useradd -m -G wheel -s /bin/bash username  (to add new user) > passwd username
+
+27) useradd -m -G wheel -s /bin/bash username (to add new user) > passwd username
+
 28) "EDITOR=vim visudo"  and uncomment the line "%wheel ALL=(ALL)"  (give sudo access to user)
 
 #ENABLING CORE SERVICES
 29) sudo systemctl enable NetworkManager
+
 30) grub-install /dev/sda
+
 31)grub-mkconfig -o /boot/grub/grub.cfg
+
 32)"sudo vim /etc/default/grub" and uncomment this "GRUB_DISABLE_OS_PROBER=true"
+
 33) grub-mkconfig -o /boot/grub/grub.cfg
+
 34) exit > umount -a (to unmount all unactive partations)
+
 35) reboot
