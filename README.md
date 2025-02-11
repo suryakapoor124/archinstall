@@ -29,64 +29,84 @@ CTRL+L = Clear Screen
 make sure to write the changes (write = save)
 
 # changing partation type 
+
 5) lsblk
-6) mkfs.ext4 /dev/sda7 (ext4 = linux file system , 7 in sda7 can be anything)          [ROOT PARTATION]
-7) mkfs.fat -F 32 /dev/sda5   (fat -F 32 is file system for FAT32)                    [BOOT PARTATION]
-8) mkswap /dev/sda6  (create a swap partation)                                        [SWAP PARTATON]
+6)
+7)
+8) ```bash
+   mkfs.ext4 /dev/sda7
+   ```
+   (ext4 = linux file system , 7 in sda7 can be anything)          [ROOT PARTATION]
+9) ```bash
+   mkfs.fat -F 32 /dev/sda5
+   ```
+      (fat -F 32 is file system for FAT32)                    [BOOT PARTATION]
+10) 
+     ```bash
+    mkswap /dev/sda6
+    ```
+     (create a swap partation)                                        [SWAP PARTATON]
 
 #mounting partations
-9) mount /dev/sda7 /mnt      
-10) mkdir -p /mnt/boot/efi  (make this directory so that you can mount the boot part here)
-11) mount /dev/sda5 /mnt/boot/efi
-12) swapon /dev/sda6 (We don't mount the SWAP, we trun that on by this command)
-13) confirm if by running lsblk , it should look like this 
+11) 
+```bash
+mount /dev/sda7 /mnt
+```   
+
+12)mkdir -p /mnt/boot/efi  (make this directory so that you can mount the boot part here)
+13) 
+```bash
+mount /dev/sda5 /mnt/boot/efi
+```
+14) swapon /dev/sda6 (We don't mount the SWAP, we trun that on by this command)
+15) confirm if by running lsblk , it should look like this 
 
           Photo attached
 
 
 #IMPORTANT package installation
-14) pacstrap /mnt base linux linux-firmware sof-firmware base-devel grub efibootmgr vim nano networkmanager.
+16) pacstrap /mnt base linux linux-firmware sof-firmware base-devel grub efibootmgr vim nano networkmanager.
 
-15)genfstab /mnt (give info about file system )
+17)genfstab /mnt (give info about file system )
 
-16) genfstab /mnt > /mnt/etc/fstab () transfer the command's contents to fstab file.
+18) genfstab /mnt > /mnt/etc/fstab () transfer the command's contents to fstab file.
 
-17) arch-chroot /mnt (chroot means changeRoot into mnt)
+19) arch-chroot /mnt (chroot means changeRoot into mnt)
 
-18) ln -sf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime (set date and time)
+20) ln -sf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime (set date and time)
 
-19) hwclock --systohc (syncronize system clock)
+21) hwclock --systohc (syncronize system clock)
 
 #localization
-20) vim /etc/locale.gen
+22) vim /etc/locale.gen
 
-21) find es_US.UTF-8 and uncomment this.
+23) find es_US.UTF-8 and uncomment this.
 
-22) locale-gen
+24) locale-gen
 
-23)open /etc/locate.conf with vim 
+25)open /etc/locate.conf with vim 
 
-24)add "LANG=en_US.UTF-8" and save it.
+26)add "LANG=en_US.UTF-8" and save it.
 
-25)open "/etc/hostname" and type the hostname there
+27)open "/etc/hostname" and type the hostname there
 
-26)passwd (to setup passwod)
+29)passwd (to setup passwod)
 
-27) useradd -m -G wheel -s /bin/bash username (to add new user) > passwd username
+30) useradd -m -G wheel -s /bin/bash username (to add new user) > passwd username
 
-28) "EDITOR=vim visudo"  and uncomment the line "%wheel ALL=(ALL)"  (give sudo access to user)
+31) "EDITOR=vim visudo"  and uncomment the line "%wheel ALL=(ALL)"  (give sudo access to user)
 
 #ENABLING CORE SERVICES
-29) sudo systemctl enable NetworkManager
+32) sudo systemctl enable NetworkManager
 
-30) grub-install /dev/sda
+33) grub-install /dev/sda
 
-31)grub-mkconfig -o /boot/grub/grub.cfg
+34)grub-mkconfig -o /boot/grub/grub.cfg
 
-32)"sudo vim /etc/default/grub" and uncomment this "GRUB_DISABLE_OS_PROBER=true"
+35)"sudo vim /etc/default/grub" and uncomment this "GRUB_DISABLE_OS_PROBER=true"
 
-33) grub-mkconfig -o /boot/grub/grub.cfg
+36) grub-mkconfig -o /boot/grub/grub.cfg
 
-34) exit > umount -a (to unmount all unactive partations)
+37) exit > umount -a (to unmount all unactive partations)
 
-35) reboot
+38) reboot
